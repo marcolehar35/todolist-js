@@ -2,6 +2,7 @@
  * Todolist
  */
 const app = {
+  todo: null, // cible dans le DOM
   init: function () {
     // Target du DOM
     app.todo = document.getElementById('todo');
@@ -32,6 +33,15 @@ const app = {
   },
   createCounter: function () {
     console.log('app : createCounter');
+    // ajout d'un div
+    const counter = document.createElement('div');
+    counter.id = 'todo-counter';
+
+    // Préparer le contenu
+    counter.textContent = '2 tâche(s) en cours';
+
+    // ajout du compteur au DOM
+    app.todo.appendChild(counter);
   },
   createList: function () {
     console.log('app : createList');
