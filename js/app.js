@@ -1,12 +1,30 @@
 /**
  * Todolist
  */
+
+const tasks = [
+  {
+    label: 'farine',
+    done: false,
+  },
+  {
+    label: 'sucre',
+    done: true,
+  },
+  {
+    label: 'lait',
+    done: false,
+  }
+];
+
 const app = {
   count: 0, // on part de 0 pour le compteur
   todo: null, // cible dans le DOM
   init: function () {
     // Target du DOM
     app.todo = document.getElementById('todo');
+    // Ménage
+    app.todo.innerHTML = '';
     // Génération du Form
     app.createForm();
     // Génération du Counter
@@ -21,20 +39,15 @@ const app = {
     const formInput = document.querySelector('#todo-input');
     const value = formInput.value;
 
-    // Alternative : Recup de la valeur du champ
-    // const value = evt.target.elements.inputValue.value;
-
-    // Génération d'une nouvelle tache
-    app.generateTask({
+    // Ajout d'une tache aux données et non à l'interface
+    tasks.push({
       label: value,
       done: false,
     });
 
-    // Nettoyage de la valeur du champ
-    formInput.value = '';
-    // MAJ du compteur
-    app.count++;
-    app.updateCounter();
+    // Je recharge l'interface
+    app.init();
+
   },
   createForm: function () {
     console.log('app : createForm');
@@ -67,8 +80,11 @@ const app = {
     const counter = document.createElement('div');
     counter.id = 'todo-counter';
 
+    // Préapration des taches non effectuées
+    const tasksUndone = tasks.filter((task) => !task.done);
+
     // Préparer le contenu
-    counter.textContent = `${app.count} tâche(s) en cours`;
+    counter.textContent = `${tasksUndone.length} tâche(s) en cours`;
 
     // ajout du compteur au DOM
     app.todo.appendChild(counter);
@@ -80,6 +96,8 @@ const app = {
     list.id = 'tasks-list';
     // je stocke dans tout app mon élément list (accessible de partout)
     app.list = list;
+    // J'affiche les taches de l'utilisateur
+    tasks.forEach(app.generateTask);
 
     // ajout au DOM
     app.todo.appendChild(list);
@@ -101,17 +119,8 @@ const app = {
 
     // Je vais écouter le changement sur la checkbox
     checkbox.addEventListener('change', function () {
-      // Changer la class (toggle)
-      task.classList.toggle('task-label--done');
-
-      if (checkbox.checked) {
-        app.count--;
-      } else {
-        app.count++;
-      }
-
-      // MAJ compteur dans le DOM
-      app.updateCounter();
+      data.done = !data.done;
+      app.init();
     });
 
     // ajout d'un label => span
