@@ -13,11 +13,32 @@ const app = {
     // Génération de la List
     app.createList();
   },
+  addTask: function (evt) {
+    evt.preventDefault();
+    console.log('submit');
+    // Ajouter une tache dans la liste des taches
+    const formInput = document.querySelector('#todo-input');
+    const value = formInput.value;
+
+    // Alternative : Recup de la valeur du champ
+    // const value = evt.target.elements.inputValue.value;
+
+    // Génération d'une nouvelle tache
+    app.generateTask({
+      label: value,
+      done: false,
+    });
+
+    // Nettoyage de la valeur du champ
+    formInput.value = '';
+  },
   createForm: function () {
     console.log('app : createForm');
     // ajout d'un <form>
     const form = document.createElement('form');
     form.id = 'todo-form';
+
+    form.addEventListener('submit', app.addTask);
 
     // ajout d'un input text et l'ajouter au form
     const input = document.createElement('input');
