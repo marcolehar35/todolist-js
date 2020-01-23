@@ -60,6 +60,10 @@ const app = {
       label: 'Coder un site en PHP',
       done: true,
     });
+    app.generateTask({
+      label: 'Faire des crepes',
+      done: true,
+    });
 
     // ajout au DOM
     app.todo.appendChild(list);
@@ -69,6 +73,10 @@ const app = {
     // ajout d'un li + enrichissements
     const task = document.createElement('li');
     task.className = 'task';
+
+    if (data.done) {
+      task.classList.add('task-label--done');
+    }
 
     // ajout d'un checkbox
     const checkbox = document.createElement('input');
