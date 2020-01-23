@@ -45,6 +45,47 @@ const app = {
   },
   createList: function () {
     console.log('app : createList');
+    // Création de la liste
+    const list = document.createElement('ul');
+    list.id = 'tasks-list';
+    // je stocke dans tout app mon élément list (accessible de partout)
+    app.list = list;
+
+    // Création des tâches
+    app.generateTask({
+      label: 'Coder une todolist en JS',
+      done: false,
+    });
+    app.generateTask({
+      label: 'Coder un site en PHP',
+      done: true,
+    });
+
+    // ajout au DOM
+    app.todo.appendChild(list);
+  },
+  // gère la création d'un li (tache)
+  generateTask: function (data) {
+    // ajout d'un li + enrichissements
+    const task = document.createElement('li');
+    task.className = 'task';
+
+    // ajout d'un checkbox
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = data.done;
+
+    // ajout d'un label => span
+    const label = document.createElement('span');
+    label.className = 'task-label';
+    label.textContent = data.label;
+
+    // ajouter checkbox et span au li
+    task.appendChild(checkbox);
+    task.appendChild(label);
+
+    // ajouter le li à la liste de taches
+    app.list.appendChild(task);
   },
 };
 
